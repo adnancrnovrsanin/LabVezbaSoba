@@ -92,7 +92,7 @@ void drawSofa()
 
     // Add cushions to sofa
     glColor3f(0.9, 0.9, 0.9); // Light grey color for the cushions
-    drawCube(0.5, 0.5, 0.1, 3.1, -0.1, 1.0, 60, 1.0, 0.0, 1.0); // First cushion on sofa
+    drawCube(0.5, 0.5, 0.1, 3.1, -0.1, 1.0, 60, 1.0, 0.0, 1.0);  // First cushion on sofa
     drawCube(0.5, 0.5, 0.1, 3.1, -0.1, -0.9, -60, 1.0, 1.0, 1.0); // Second cushion on sofa
 }
 
@@ -212,7 +212,17 @@ void drawScene(void)
 void processNormalKey(unsigned char key, int xx, int yy)
 {
     if (key == ESC || key == 'q' || key == 'Q')
+    {
         exit(0);
+    }
+    if (key == 'a')
+    {
+        glDisable(GL_LIGHT0);
+    }
+    if (key == 's')
+    {
+        glEnable(GL_LIGHT0);
+    }
 }
 
 void pressSpecialKey(int key, int xx, int yy)
@@ -285,25 +295,12 @@ void lights()
     glLightfv(GL_LIGHT0, GL_POSITION, light_position1);
 }
 
-void lightoff(unsigned char key, int x, int y)
-{
-    if (key == 'a')
-    {
-        glDisable(GL_LIGHT0);
-    }
-    if (key == 's')
-    {
-        glEnable(GL_LIGHT0);
-    }
-    glutPostRedisplay();
-}
-
 int main(int argc, char **argv)
 {
     printf("\n\
 -----------------------------------------------------------------------\n\
   OpenGL Sample Program:\n\
-  - Hold up-arrow/down-arrow to move camera n\
+  - Hold up-arrow/down-arrow to move camera forward/backward\n\
   - q or ESC to quit\n\
 -----------------------------------------------------------------------\n");
 
@@ -325,7 +322,6 @@ int main(int argc, char **argv)
     glutKeyboardFunc(processNormalKey);
     glutSpecialFunc(pressSpecialKey);
     glutSpecialUpFunc(releaseSpecialKey);
-    glutKeyboardFunc(lightoff);
 
     // OpenGL init
     glEnable(GL_DEPTH_TEST);
